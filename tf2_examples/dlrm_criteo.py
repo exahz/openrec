@@ -1,4 +1,3 @@
-from tensorflow.data import Dataset
 from openrec.tf2.recommenders import DLRM
 from tensorflow.keras import optimizers
 from tqdm import tqdm
@@ -15,14 +14,14 @@ eval_interval = 100
 save_interval = eval_interval
 
 # Sample 1000 batches for training
-train_dataset = Dataset.from_tensor_slices({
+train_dataset = tf.data.Dataset.from_tensor_slices({
                     'dense_features': raw_data['X_int_train'][:batch_size*1000],
                     'sparse_features': raw_data['X_cat_train'][:batch_size*1000],
                     'label': raw_data['y_train'][:batch_size*1000]
                 }).batch(batch_size).prefetch(1).shuffle(5*batch_size)
     
 # Sample 100 batches for validation
-val_dataset = Dataset.from_tensor_slices({
+val_dataset = tf.data.Dataset.from_tensor_slices({
                     'dense_features': raw_data['X_int_val'][:batch_size*100],
                     'sparse_features': raw_data['X_cat_val'][:batch_size*100],
                     'label': raw_data['y_val'][:batch_size*100]
